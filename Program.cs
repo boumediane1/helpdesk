@@ -1,3 +1,4 @@
+using helpdesk.Endpoints;
 using helpdesk.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,14 +22,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/projects", (Project p) =>
-{
-    var project = new Project();
-    project.Title = p.Title;
-    
-    var context = new AppDbContext();
-    context.Add(project);
-    context.SaveChanges();
-});
+app.RegisterProjectEndpoints();
+app.RegisterTicketEndpoints();
 
 app.Run();
