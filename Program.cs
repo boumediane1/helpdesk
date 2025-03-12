@@ -24,5 +24,6 @@ app.UseHttpsRedirection();
 
 app.RegisterProjectEndpoints();
 app.RegisterTicketEndpoints();
+app.RegisterUserEndpoints();
 
 app.Run();
