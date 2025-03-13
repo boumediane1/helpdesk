@@ -10,18 +10,7 @@ public static class UserEndpoints
         app.MapGet("/users", async (AppDbContext db) =>
         {
              var users = await db.Users.ToListAsync();
-             
-             return users.Select(user => {
-                 var userResponse = new UserResponse
-                 {
-                     Id = user.Id,
-                     Name = user.Name,
-                     Email = user.Email,
-                     Role = user.Role
-                 };
-                 
-                 return userResponse;
-             });
+             return users.Select(UserResponse.from);
         });
     }
 }

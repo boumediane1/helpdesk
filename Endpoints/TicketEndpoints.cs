@@ -18,7 +18,7 @@ public static class TicketEndpoints
                     Id = ticket.Id,
                     Title = ticket.Title,
                     Descriptions = ticket.Descriptions,
-                    State = ticket.State,
+                    State = ticket.State.ToString(),
                     Assignee = UserResponse.from(ticket.User),
                     Tags = [..ticket.Tags.Select(TicketResponse.TagResponse.from)]
                 }
