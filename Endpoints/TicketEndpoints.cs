@@ -15,5 +15,21 @@ public static class TicketEndpoints
 
             return tickets.Select(TicketResponse.from);
         });
+
+        app.MapPost("/tickets", async (CreateTicketRequest request, AppDbContext db) =>
+        {
+            var user = await db.Users.FindAsync(request.UserId);
+            
+            var ticket = new Ticket
+            {
+                Title = request.Title,
+                Description = request.Description,
+                State = State.Open,
+                User = user
+            };
+
+            db.Tickets.Add(ticket);
+            await db.SaveChangesAsync();
+        });
     }
 }
