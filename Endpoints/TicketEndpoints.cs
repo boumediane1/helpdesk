@@ -13,16 +13,7 @@ public static class TicketEndpoints
                 .Include(ticket => ticket.User)
                 .Include(ticket => ticket.Tags).ToListAsync();
 
-            return tickets.Select(ticket => new TicketResponse
-                {
-                    Id = ticket.Id,
-                    Title = ticket.Title,
-                    Descriptions = ticket.Descriptions,
-                    State = ticket.State.ToString(),
-                    Assignee = UserResponse.from(ticket.User),
-                    Tags = [..ticket.Tags.Select(TicketResponse.TagResponse.from)]
-                }
-            );
+            return tickets.Select(TicketResponse.from);
         });
     }
 }

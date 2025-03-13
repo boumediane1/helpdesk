@@ -23,4 +23,17 @@ public class TicketResponse
     public string State { get; set; }
     public UserResponse Assignee { get; set; }
     public List<TagResponse> Tags { get; set; }
+
+    public static TicketResponse from(Ticket ticket)
+    {
+        return new TicketResponse
+        {
+            Id = ticket.Id,
+            Title = ticket.Title,
+            Descriptions = ticket.Descriptions,
+            State = ticket.State.ToString(),
+            Assignee = UserResponse.from(ticket.User),
+            Tags = [..ticket.Tags.Select(TicketResponse.TagResponse.from)]
+        };
+    }
 }
