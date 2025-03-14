@@ -8,14 +8,21 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AppDbContext>(opt =>
-    {
-        opt.UseNpgsql(
-            builder.Configuration.GetConnectionString("HelpDeskContext"),
-            o => o.SetPostgresVersion(16, 4)
-        );
-        opt.EnableSensitiveDataLogging();
-    });
+{
+    opt.UseNpgsql(
+        builder.Configuration.GetConnectionString("HelpDeskContext"),
+        o => o.SetPostgresVersion(16, 4)
+    );
+    opt.EnableSensitiveDataLogging();
+});
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy => { policy.WithOrigins("*").AllowAnyHeader(); });
+});
 
 var app = builder.Build();
 
@@ -30,5 +37,7 @@ app.UseHttpsRedirection();
 app.RegisterProjectEndpoints();
 app.RegisterTicketEndpoints();
 app.RegisterUserEndpoints();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.Run();
