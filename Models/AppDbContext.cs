@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace helpdesk.Models;
 
-public class AppDbContext : IdentityDbContext<IdentityUser>
+public class AppDbContext : IdentityDbContext<ApplicationUser>
 {
     public DbSet<Project> Projects { get; set; }
     public DbSet<Ticket> Tickets { get; set; }
