@@ -4,18 +4,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace helpdesk.Models;
 
-public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+public class AppDbContext : IdentityDbContext<IdentityUser>
 {
     public DbSet<Project> Projects { get; set; }
     public DbSet<Ticket> Tickets { get; set; }
     public DbSet<ApplicationUser> Users { get; set; }
     public DbSet<Tag> Tags { get; set; }
 
-    public ApplicationDbContext()
+    public AppDbContext()
     {
     }
 
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }
 
