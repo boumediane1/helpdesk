@@ -1,17 +1,17 @@
 namespace helpdesk.Models;
 
-public class UserResponse
+public class AssigneeResponse
 {
     public long Id { get; set; }
     public string Name { get; set; }
     public string Email { get; set; }
     public string Role { get; set; }
 
-    public static UserResponse? From(User? user)
+    public static AssigneeResponse? From(User? user)
     {
         return user == null
             ? null
-            : new UserResponse
+            : new AssigneeResponse
             {
                 Id = user.Id,
                 Name = user.Name,

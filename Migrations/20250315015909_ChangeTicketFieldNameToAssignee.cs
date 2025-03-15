@@ -17,17 +17,17 @@ namespace helpdesk.Migrations
             migrationBuilder.RenameColumn(
                 name: "UserId",
                 table: "Tickets",
-                newName: "ReporterId");
+                newName: "AssigneeId");
 
             migrationBuilder.RenameIndex(
                 name: "IX_Tickets_UserId",
                 table: "Tickets",
-                newName: "IX_Tickets_ReporterId");
+                newName: "IX_Tickets_AssigneeId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Tickets_Users_ReporterId",
+                name: "FK_Tickets_Users_AssigneeId",
                 table: "Tickets",
-                column: "ReporterId",
+                column: "AssigneeId",
                 principalTable: "Users",
                 principalColumn: "Id");
         }
@@ -36,16 +36,16 @@ namespace helpdesk.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Tickets_Users_ReporterId",
+                name: "FK_Tickets_Users_AssigneeId",
                 table: "Tickets");
 
             migrationBuilder.RenameColumn(
-                name: "ReporterId",
+                name: "AssigneeId",
                 table: "Tickets",
                 newName: "UserId");
 
             migrationBuilder.RenameIndex(
-                name: "IX_Tickets_ReporterId",
+                name: "IX_Tickets_AssigneeId",
                 table: "Tickets",
                 newName: "IX_Tickets_UserId");
 

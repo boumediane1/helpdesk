@@ -12,7 +12,7 @@ using helpdesk.Models;
 namespace helpdesk.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250315013829_ChangeTicketFieldNameToAssignee")]
+    [Migration("20250315015909_ChangeTicketFieldNameToAssignee")]
     partial class ChangeTicketFieldNameToAssignee
     {
         /// <inheritdoc />
@@ -278,12 +278,12 @@ namespace helpdesk.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
+                    b.Property<long?>("AssigneeId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<long?>("ReporterId")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("State")
                         .IsRequired()
@@ -295,7 +295,7 @@ namespace helpdesk.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ReporterId");
+                    b.HasIndex("AssigneeId");
 
                     b.ToTable("Tickets");
                 });
@@ -397,11 +397,11 @@ namespace helpdesk.Migrations
 
             modelBuilder.Entity("helpdesk.Models.Ticket", b =>
                 {
-                    b.HasOne("helpdesk.Models.User", "Reporter")
+                    b.HasOne("helpdesk.Models.User", "Assignee")
                         .WithMany()
-                        .HasForeignKey("ReporterId");
+                        .HasForeignKey("AssigneeId");
 
-                    b.Navigation("Reporter");
+                    b.Navigation("Assignee");
                 });
 #pragma warning restore 612, 618
         }

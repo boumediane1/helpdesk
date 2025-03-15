@@ -10,7 +10,7 @@ public static class UserEndpoints
         app.MapGet("/users", async (AppDbContext db) =>
         {
              var users = await db.Users.ToListAsync();
-             return users.Select(UserResponse.From);
+             return users.Select(AssigneeResponse.From);
         }).RequireAuthorization();
     }
 }

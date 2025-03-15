@@ -11,6 +11,7 @@ public class Ticket
     [Column(TypeName = "varchar(255)")]
     public State State { get; set; }
     
-    public User? Reporter { get; set; }
+    public User? Assignee { get; set; }
+    public User Reporter { get; set; }
     public List<Tag> Tags { get; set; }
 }

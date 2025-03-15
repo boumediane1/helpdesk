@@ -12,7 +12,7 @@ public static class TicketEndpoints
         app.MapGet("/tickets", async (AppDbContext db) =>
         {
             var tickets = await db.Tickets
-                .Include(ticket => ticket.Reporter)
+                .Include(ticket => ticket.Assignee)
                 .Include(ticket => ticket.Tags).ToListAsync();
 
             return tickets.Select(TicketResponse.From);
@@ -20,7 +20,7 @@ public static class TicketEndpoints
 
         app.MapPost("/tickets", async (CreateTicketRequest request, AppDbContext db) =>
         {
-            var user = await db.Users.FindAsync(request.UserId);
+            var user = await db.Users.FindAsync(request.AssigneeId);
 
             var tags = await db.Tags.Where(tag => request.Tags.Contains(tag.Title)).ToListAsync();
 
@@ -29,7 +29,7 @@ public static class TicketEndpoints
                 Title = request.Title,
                 Description = request.Description,
                 State = State.Open,
-                Reporter = user,
+                Assignee = user,
                 Tags = tags
             };
 
