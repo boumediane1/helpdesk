@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using helpdesk.Models;
@@ -11,9 +12,11 @@ using helpdesk.Models;
 namespace helpdesk.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250315002101_Identity")]
+    partial class Identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -279,9 +282,6 @@ namespace helpdesk.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<long?>("ReporterId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("State")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
@@ -290,9 +290,12 @@ namespace helpdesk.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ReporterId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tickets");
                 });
@@ -394,11 +397,11 @@ namespace helpdesk.Migrations
 
             modelBuilder.Entity("helpdesk.Models.Ticket", b =>
                 {
-                    b.HasOne("helpdesk.Models.User", "Reporter")
+                    b.HasOne("helpdesk.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("ReporterId");
+                        .HasForeignKey("UserId");
 
-                    b.Navigation("Reporter");
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

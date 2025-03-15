@@ -1,5 +1,6 @@
 using helpdesk.Endpoints;
 using helpdesk.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,11 +11,13 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AppDbContext>(opt =>
 {
     opt.UseNpgsql(
-        builder.Configuration.GetConnectionString("HelpDeskContext"),
+        builder.Configuration.GetConnectionString("ApplicationDbContext"),
         o => o.SetPostgresVersion(16, 4)
     );
     opt.EnableSensitiveDataLogging();
 });
+
+builder.Services.AddIdentityApiEndpoints<IdentityUser>().AddEntityFrameworkStores<AppDbContext>();
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -23,6 +26,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
         policy => { policy.WithOrigins("*").AllowAnyHeader(); });
 });
+
+builder.Services.AddAuthentication().AddBearerToken();
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -39,5 +45,7 @@ app.RegisterTicketEndpoints();
 app.RegisterUserEndpoints();
 
 app.UseCors(MyAllowSpecificOrigins);
+
+app.MapIdentityApi<IdentityUser>();
 
 app.Run();

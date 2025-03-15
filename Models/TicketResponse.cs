@@ -21,10 +21,10 @@ public class TicketResponse
     public string Title { get; set; }
     public string Description { get; set; }
     public string State { get; set; }
-    public UserResponse Assignee { get; set; }
+    public UserResponse? Assignee { get; set; }
     public List<TagResponse> Tags { get; set; }
 
-    public static TicketResponse from(Ticket ticket)
+    public static TicketResponse From(Ticket ticket)
     {
         return new TicketResponse
         {
@@ -32,7 +32,7 @@ public class TicketResponse
             Title = ticket.Title,
             Description = ticket.Description,
             State = ticket.State.ToString(),
-            Assignee = UserResponse.from(ticket.User),
+            Assignee = UserResponse.From(ticket.Reporter),
             Tags = [..ticket.Tags.Select(TicketResponse.TagResponse.from)]
         };
     }
