@@ -8,7 +8,7 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
 {
     public DbSet<Project> Projects { get; set; }
     public DbSet<Ticket> Tickets { get; set; }
-    public DbSet<User> Users { get; set; }
+    public DbSet<ApplicationUser> Users { get; set; }
     public DbSet<Tag> Tags { get; set; }
 
     public ApplicationDbContext()

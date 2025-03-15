@@ -7,14 +7,14 @@ public class ReporterResponse
     public string Email { get; set; }
     public string Role { get; set; }
 
-    public static AssigneeResponse From(User user)
+    public static AssigneeResponse From(ApplicationUser applicationUser)
     {
         return new AssigneeResponse
         {
-            Id = user.Id,
-            Name = user.Name,
-            Email = user.Email,
-            Role = user.Role.ToString()
+            Id = applicationUser.Id,
+            Name = applicationUser.Name,
+            Email = applicationUser.Email,
+            Role = applicationUser.Role.ToString()
         };
     }
 }

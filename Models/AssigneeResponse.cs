@@ -7,7 +7,7 @@ public class AssigneeResponse
     public string Email { get; set; }
     public string Role { get; set; }
 
-    public static AssigneeResponse? From(User? user)
+    public static AssigneeResponse? From(ApplicationUser? user)
     {
         return user == null
             ? null
