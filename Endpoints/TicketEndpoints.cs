@@ -9,7 +9,7 @@ public static class TicketEndpoints
 {
     public static void RegisterTicketEndpoints(this WebApplication app)
     {
-        app.MapGet("/tickets", async (AppDbContext db) =>
+        app.MapGet("/tickets", async (ApplicationDbContext db) =>
         {
             var tickets = await db.Tickets
                 .Include(ticket => ticket.Assignee)
@@ -18,7 +18,7 @@ public static class TicketEndpoints
             return tickets.Select(TicketResponse.From);
         }).RequireAuthorization();
 
-        app.MapPost("/tickets", async (CreateTicketRequest request, AppDbContext db) =>
+        app.MapPost("/tickets", async (CreateTicketRequest request, ApplicationDbContext db) =>
         {
             var user = await db.Users.FindAsync(request.AssigneeId);
 

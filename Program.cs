@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddDbContext<AppDbContext>(opt =>
+builder.Services.AddDbContext<ApplicationDbContext>(opt =>
 {
     opt.UseNpgsql(
         builder.Configuration.GetConnectionString("ApplicationDbContext"),
@@ -17,7 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.EnableSensitiveDataLogging();
 });
 
-builder.Services.AddIdentityApiEndpoints<IdentityUser>().AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddIdentityApiEndpoints<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
