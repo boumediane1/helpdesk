@@ -17,7 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.EnableSensitiveDataLogging();
 });
 
-builder.Services.AddIdentityApiEndpoints<IdentityUser>().AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddIdentityApiEndpoints<ApplicationUser>().AddEntityFrameworkStores<AppDbContext>();
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -43,9 +43,10 @@ app.UseHttpsRedirection();
 app.RegisterProjectEndpoints();
 app.RegisterTicketEndpoints();
 app.RegisterUserEndpoints();
+app.RegisterAuthenticationEndpoints();
 
 app.UseCors(MyAllowSpecificOrigins);
 
-app.MapIdentityApi<IdentityUser>();
+// app.MapIdentityApi<ApplicationUser>();
 
 app.Run();

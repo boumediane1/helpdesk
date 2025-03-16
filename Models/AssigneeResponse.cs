@@ -11,7 +11,7 @@ public class AssigneeResponse
             ? null
             : new AssigneeResponse
             {
-                Id = user.Id
+                Name = user.Name
             };
     }
 }

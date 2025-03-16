@@ -18,9 +18,13 @@ public static class TicketEndpoints
             return tickets.Select(TicketResponse.From);
         }).RequireAuthorization();
 
-        app.MapPost("/tickets", async (CreateTicketRequest request, AppDbContext db) =>
+        app.MapPost("/tickets", async (ClaimsPrincipal principal, CreateTicketRequest request, AppDbContext db) =>
         {
-            var user = await db.Users.FindAsync(request.AssigneeId);
+            var assignee = await db.Users.FindAsync(request.AssigneeId);
+
+            var username = principal.Identity?.Name;
+
+            var reporter = await db.Users.Where(user => user.UserName == username).FirstAsync();
 
             var tags = await db.Tags.Where(tag => request.Tags.Contains(tag.Title)).ToListAsync();
 
@@ -29,7 +33,8 @@ public static class TicketEndpoints
                 Title = request.Title,
                 Description = request.Description,
                 State = State.Open,
-                Assignee = user,
+                Reporter = reporter,
+                Assignee = assignee,
                 Tags = tags
             };
 
