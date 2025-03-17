@@ -1,23 +1,13 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace helpdesk.Models;
 
-public class AppDbContext : IdentityDbContext<ApplicationUser>
+public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<ApplicationUser>(options)
 {
     public DbSet<Project> Projects { get; set; }
     public DbSet<Ticket> Tickets { get; set; }
-    public DbSet<ApplicationUser> Users { get; set; }
     public DbSet<Tag> Tags { get; set; }
-
-    public AppDbContext()
-    {
-    }
-
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-    {
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

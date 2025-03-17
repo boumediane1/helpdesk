@@ -1,6 +1,5 @@
 using System.Security.Claims;
 using helpdesk.Models;
-using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.EntityFrameworkCore;
 
 namespace helpdesk.Endpoints;
@@ -12,8 +11,10 @@ public static class TicketEndpoints
         app.MapGet("/tickets", async (AppDbContext db) =>
         {
             var tickets = await db.Tickets
+                .Include(ticket => ticket.Reporter)
                 .Include(ticket => ticket.Assignee)
-                .Include(ticket => ticket.Tags).ToListAsync();
+                .Include(ticket => ticket.Tags)
+                .ToListAsync();
 
             return tickets.Select(TicketResponse.From);
         }).RequireAuthorization();

@@ -7,7 +7,7 @@ public class TicketResponse
         public long Id { get; set; }
         public string Title { get; set; }
 
-        public static TagResponse from(Tag tag)
+        public static TagResponse From(Tag tag)
         {
             return new TagResponse
             {
@@ -17,12 +17,29 @@ public class TicketResponse
         }
     }
 
+    public class AssigneeResponse
+    {
+        public string Name { get; set; }
+        public string? UserName { get; set; }
+
+        public static AssigneeResponse? From(ApplicationUser? user)
+        {
+            return user == null
+                ? null
+                : new AssigneeResponse
+                {
+                    Name = user.Name,
+                    UserName = user.UserName
+                };
+        }
+    }
+
     public long Id { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
     public string State { get; set; }
     public AssigneeResponse? Assignee { get; set; }
-    public AssigneeResponse Reporter;
+    public UserResponse Reporter { get; set; }
     public List<TagResponse> Tags { get; set; }
 
     public static TicketResponse From(Ticket ticket)
@@ -34,8 +51,8 @@ public class TicketResponse
             Description = ticket.Description,
             State = ticket.State.ToString(),
             Assignee = AssigneeResponse.From(ticket.Assignee),
-            Reporter = ReporterResponse.From(ticket.Reporter),
-            Tags = [..ticket.Tags.Select(TagResponse.from)]
+            Reporter = UserResponse.From(ticket.Reporter),
+            Tags = [..ticket.Tags.Select(TagResponse.From)]
         };
     }
 }

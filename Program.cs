@@ -17,7 +17,10 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.EnableSensitiveDataLogging();
 });
 
-builder.Services.AddIdentityApiEndpoints<ApplicationUser>().AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>();
+
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
