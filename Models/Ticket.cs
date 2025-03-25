@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace helpdesk.Models;
@@ -13,5 +14,6 @@ public class Ticket
     
     public ApplicationUser? Assignee { get; set; }
     public ApplicationUser Reporter { get; set; }
+    public string ReporterId { get; set; }
     public List<Tag> Tags { get; set; }
 }

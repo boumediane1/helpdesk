@@ -20,6 +20,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
                 x => x.HasOne<Tag>().WithMany().HasForeignKey("TagId"),
                 x => x.HasOne<Ticket>().WithMany().HasForeignKey("TicketId"),
                 x => x.ToTable("TagTicket", "public"));
+
+        modelBuilder.Entity<Ticket>().HasOne<ApplicationUser>(ticket => ticket.Reporter).WithMany(user => user.tickets)
+            .HasForeignKey(ticket => ticket.ReporterId).IsRequired();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
