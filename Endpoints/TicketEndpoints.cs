@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using helpdesk.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.EntityFrameworkCore;
 
 namespace helpdesk.Endpoints;
