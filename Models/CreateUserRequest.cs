@@ -5,7 +5,7 @@ namespace helpdesk.Models;
 public class CreateUserRequest
 {
     public string Name { get; set; }
-    public string UserName { get; set; }
+    public string Username { get; set; }
     public string Password { get; set; }
 
     public static ApplicationUser From(CreateUserRequest request)
@@ -13,8 +13,8 @@ public class CreateUserRequest
         var user = new ApplicationUser
         {
             Name = request.Name,
-            UserName = request.UserName,
-            NormalizedUserName = request.UserName.ToUpper()
+            UserName = request.Username,
+            NormalizedUserName = request.Username.ToUpper()
         };
         
         var passwordHasher = new PasswordHasher<ApplicationUser>();
