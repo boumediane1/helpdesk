@@ -12,7 +12,8 @@ public static class UserEndpoints
         app.MapGet("/users", [Authorize(Roles = nameof(Role.Admin))] async (AppDbContext db) =>
         {
             var users = await db.Users.ToListAsync();
-            return users.Select(UserResponse.From);
+            return users.Select(UserResponse.From).Where(user => user.Username != "admin")
+                .OrderByDescending(user => user.Date);
         });
 
         app.MapPost("/users",
@@ -20,6 +21,7 @@ public static class UserEndpoints
             async (AppDbContext db, CreateUserRequest request, UserManager<ApplicationUser> roleManager) =>
             {
                 var user = CreateUserRequest.From(request);
+                user.Date = DateTime.UtcNow;
                 db.Users.Add(user);
                 await db.SaveChangesAsync();
                 await roleManager.AddToRoleAsync(user, nameof(Role.Member));
