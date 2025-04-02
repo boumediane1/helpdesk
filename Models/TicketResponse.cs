@@ -20,7 +20,7 @@ public class TicketResponse
     public class AssigneeResponse
     {
         public string Name { get; set; }
-        public string? UserName { get; set; }
+        public string? Username { get; set; }
 
         public static AssigneeResponse? From(ApplicationUser? user)
         {
@@ -29,7 +29,7 @@ public class TicketResponse
                 : new AssigneeResponse
                 {
                     Name = user.Name,
-                    UserName = user.UserName
+                    Username = user.UserName
                 };
         }
     }
@@ -41,6 +41,7 @@ public class TicketResponse
     public DateTime Date { get; set; }
     public AssigneeResponse? Assignee { get; set; }
     public UserResponse Reporter { get; set; }
+    public string Project { get; set; }
     public List<TagResponse> Tags { get; set; }
 
     public static TicketResponse From(Ticket ticket)
@@ -54,6 +55,7 @@ public class TicketResponse
             Date = ticket.Date,
             Assignee = AssigneeResponse.From(ticket.Assignee),
             Reporter = UserResponse.From(ticket.Reporter),
+            Project = ticket.Project.Title,
             Tags = [..ticket.Tags.Select(TagResponse.From)]
         };
     }

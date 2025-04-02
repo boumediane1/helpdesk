@@ -15,6 +15,7 @@ public static class TicketEndpoints
                 .Include(ticket => ticket.Reporter)
                 .Include(ticket => ticket.Assignee)
                 .Include(ticket => ticket.Tags)
+                .Include(ticket => ticket.Project)
                 .ToListAsync();
 
             return tickets.Select(TicketResponse.From);
@@ -50,5 +51,17 @@ public static class TicketEndpoints
 
 
         app.MapGet("/tags", (AppDbContext db) => { return Task.FromResult(db.Tags.Select(tag => tag.Title)); });
+
+        app.MapGet("/tickets/{title}", async (AppDbContext db, string title) =>
+        {
+            var ticket = await db.Tickets
+                .Include(ticket => ticket.Reporter)
+                .Include(ticket => ticket.Assignee)
+                .Include(ticket => ticket.Tags)
+                .Include(ticket => ticket.Project)
+                .Where(ticket => ticket.Title == title)
+                .FirstAsync();
+            return TicketResponse.From(ticket);
+        }).RequireAuthorization();
     }
 }
