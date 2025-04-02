@@ -22,9 +22,11 @@ public static class TicketEndpoints
 
         app.MapPost("/tickets", async (ClaimsPrincipal principal, CreateTicketRequest request, AppDbContext db) =>
         {
-            var assignee = await db.Users.FindAsync(request.AssigneeId);
+            var assignee = await db.Users.Where(user => user.UserName == request.Assignee).FirstAsync();
 
             var username = principal.Identity?.Name;
+
+            var project = await db.Projects.Where(project => project.Title == request.ProjectTitle).FirstAsync();
 
             var reporter = await db.Users.Where(user => user.UserName == username).FirstAsync();
 
@@ -35,6 +37,7 @@ public static class TicketEndpoints
                 Title = request.Title,
                 Description = request.Description,
                 State = State.Open,
+                Project = project,
                 Reporter = reporter,
                 Assignee = assignee,
                 Tags = tags
@@ -42,6 +45,12 @@ public static class TicketEndpoints
 
             db.Tickets.Add(ticket);
             await db.SaveChangesAsync();
+        });
+
+
+        app.MapGet("/tags", async (AppDbContext db) =>
+        {
+            return db.Tags.Select(tag => tag.Title);
         });
     }
 }
