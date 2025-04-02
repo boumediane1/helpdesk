@@ -40,7 +40,8 @@ public static class TicketEndpoints
                 Project = project,
                 Reporter = reporter,
                 Assignee = assignee,
-                Tags = tags
+                Tags = tags,
+                Date = DateTime.UtcNow
             };
 
             db.Tickets.Add(ticket);
@@ -48,9 +49,6 @@ public static class TicketEndpoints
         });
 
 
-        app.MapGet("/tags", async (AppDbContext db) =>
-        {
-            return db.Tags.Select(tag => tag.Title);
-        });
+        app.MapGet("/tags", (AppDbContext db) => { return Task.FromResult(db.Tags.Select(tag => tag.Title)); });
     }
 }

@@ -38,6 +38,7 @@ public class TicketResponse
     public string Title { get; set; }
     public string Description { get; set; }
     public string State { get; set; }
+    public DateTime Date { get; set; }
     public AssigneeResponse? Assignee { get; set; }
     public UserResponse Reporter { get; set; }
     public List<TagResponse> Tags { get; set; }
@@ -50,6 +51,7 @@ public class TicketResponse
             Title = ticket.Title,
             Description = ticket.Description,
             State = ticket.State.ToString(),
+            Date = ticket.Date,
             Assignee = AssigneeResponse.From(ticket.Assignee),
             Reporter = UserResponse.From(ticket.Reporter),
             Tags = [..ticket.Tags.Select(TagResponse.From)]

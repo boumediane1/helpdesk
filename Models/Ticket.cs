@@ -8,6 +8,7 @@ public class Ticket
     public long Id { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
+    public DateTime Date { get; set; }
 
     [Column(TypeName = "varchar(255)")] public State State { get; set; }
 
