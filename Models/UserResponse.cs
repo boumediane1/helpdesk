@@ -15,4 +15,9 @@ public class UserResponse
             Date = user.Date
         };
     }
+
+    public static List<UserResponse> From(List<ApplicationUser> users)
+    {
+        return users.Select(From).ToList();
+    }
 }
