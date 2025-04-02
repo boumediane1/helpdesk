@@ -33,5 +33,13 @@ public static class ProjectEndpoints
 
             return projects.Select(ProjectResponse.From);
         }).RequireAuthorization();
+
+        app.MapGet("/projects/{title}", [Authorize(Roles = nameof(Role.Admin))] async (string title, AppDbContext db) =>
+            {
+                var project = await db.Projects.Include(project => project.Users)
+                    .Where(project => project.Title == title).FirstAsync();
+                return ProjectResponse.From(project);
+            })
+            .RequireAuthorization();
     }
 }
