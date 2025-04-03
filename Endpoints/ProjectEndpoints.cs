@@ -21,11 +21,10 @@ public static class ProjectEndpoints
             };
 
             db.Add(project);
-
             await db.SaveChangesAsync();
         });
 
-        app.MapGet("/projects", [Authorize(Roles = nameof(Role.Admin))] async (AppDbContext db) =>
+        app.MapGet("/projects", async (AppDbContext db) =>
         {
             var projects = await db.Projects
                 .Include(project => project.Users)
