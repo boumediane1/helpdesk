@@ -28,14 +28,15 @@ public static class UserEndpoints
                 await roleManager.AddToRoleAsync(user, nameof(Role.Member));
             });
 
-        app.MapGet("/me", async (AppDbContext db, ClaimsPrincipal principal, UserManager<ApplicationUser> userManager) =>
-        {
-            var username = principal.Identity?.Name;
-            var user = await db.Users.Where(user => user.UserName == username).FirstAsync();
-            var roles = await userManager.GetRolesAsync(user).ConfigureAwait(false);
-            var response =  UserResponse.From(user);
-            response.Role = roles[0];
-            return response;
-        }).RequireAuthorization();
+        app.MapGet("/me",
+            async (AppDbContext db, ClaimsPrincipal principal, UserManager<ApplicationUser> userManager) =>
+            {
+                var username = principal.Identity?.Name;
+                var user = await db.Users.Where(user => user.UserName == username).FirstAsync();
+                var roles = await userManager.GetRolesAsync(user).ConfigureAwait(false);
+                var response = UserResponse.From(user);
+                response.Role = roles[0];
+                return response;
+            }).RequireAuthorization();
     }
 }
