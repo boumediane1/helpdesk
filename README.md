@@ -57,7 +57,8 @@ C'est le cœur de notre application ! Vous pouvez :
 - Suivre l'état d'avancement (ouvert, en attente, résolu...)
 - Ajouter des tags pour mieux organiser et retrouver les tickets
 - Modifier les informations quand c'est nécessaire
-![[tickets.png]]
+ 
+![Tickets](doc/tickets.png)
 
 ### 3.2 Organisation par Projets
 
@@ -66,7 +67,9 @@ On peut regrouper les tickets par projets, ce qui aide vraiment à :
 - Garder une vue claire sur chaque projet
 - Suivre les problèmes spécifiques à chaque équipe
 - Mieux gérer les ressources et les priorités
-![[projects.png]]
+ 
+![Projects](doc/projects.png)
+
 ### 3.3 Gestion des Utilisateurs
 
 Notre système offre des fonctionnalités complètes pour la gestion des utilisateurs :
@@ -77,7 +80,8 @@ Notre système offre des fonctionnalités complètes pour la gestion des utilisa
 - Accès aux informations personnelles via un endpoint dédié
 
 Nous avons établi deux rôles principaux : administrateur et membre. On aurait pu complexifier avec plus de rôles (comme "support niveau 1", "support niveau 2"), mais on a préféré garder ça simple et efficace pour cette première version. Pas besoin de se compliquer la vie quand on commence !
-![[members.png]]
+
+![Members](doc/members.png)
 ### 3.4 Système d'Étiquettes (Tags)
 
 Pour faciliter la catégorisation et la recherche des tickets, nous avons implémenté un système d'étiquettes :
