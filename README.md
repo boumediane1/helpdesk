@@ -106,6 +106,8 @@ Ces états ont été définis après une discussion approfondie au sein de l'éq
 
 ## 4. Structure des Données
 
+![Tickets](doc/class-diagram.png)
+
 ### 4.1 Modèle de Ticket
 
 Le ticket constitue l'entité centrale de notre application. Notre classe `Ticket` comprend les propriétés suivantes :
